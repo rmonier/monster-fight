@@ -20,15 +20,11 @@ jobs:
         with:
           python-version: 3.6
           
-      - name: Install dependencies
-        uses: VaultVulp/action-pipenv@v2.0.1
-        with:
-          command: install --dev
-          
-      - name: Build
-        uses: VaultVulp/action-pipenv@v2.0.1
-        with:
-          command: run build
+      - name: Install dependencies and build
+        run: |
+          pip install pipenv
+          pipenv install --dev
+          pipenv run build
 
       - name: Generete artifacts
         uses: actions/upload-artifact@v2
