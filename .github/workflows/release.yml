@@ -20,32 +20,29 @@ jobs:
         with:
           python-version: 3.6
           
-      - name: Install dependencies and build
+      - name: Install dependencies
         run: |
           pip install pipenv
           pipenv install --dev
-          pipenv run build
-
-      - name: Generete artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: binaries
-          path: dist/
-          if-no-files-found: error
           
-      - name: Upload the artifacts
-        uses: skx/github-action-publish-binaries@master
+      - name: Build
+        run: pipenv run build
+    
+      - name: Upload the binaries
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - if: failure() 
-        name: Delete release
-        run: |
-          curl -s -X DELETE \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.event.repository.full_name }}/releases/${{ github.event.release.id }}
-          curl -s -X DELETE \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.event.repository.full_name }}/git/refs/tags/${{ github.event.release.tag_name }}
+#      - if: failure() 
+#        name: Delete release
+#        run: |
+#          curl -s -X DELETE \
+#            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+#            -H "Accept: application/vnd.github.v3+json" \
+#            https://api.github.com/repos/${{ github.event.repository.full_name }}/releases/${{ github.event.release.id }}
+#          curl -s -X DELETE \
+#            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+#            -H "Accept: application/vnd.github.v3+json" \
+#            https://api.github.com/repos/${{ github.event.repository.full_name }}/git/refs/tags/${{ github.event.release.tag_name }}
