@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[scripts]
+run = "python 'MONSTER FIGHT.py'"
+build = "pyinstaller 'MONSTER FIGHT.spec'"
+
+[dev-packages]
+pyinstaller = "*"
+
+[packages]
+pygame = "*"
+appdirs = "*"
+
+[requires]
+python_version = "3.6"
