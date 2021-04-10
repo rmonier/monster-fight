@@ -9,6 +9,7 @@ build = "pyinstaller 'MONSTER FIGHT.spec'"
 
 [dev-packages]
 pyinstaller = "*"
+macholib = "*"
 
 [packages]
 pygame = "*"
