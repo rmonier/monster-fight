@@ -44,11 +44,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
+      - name: Create macOS DMG
+        if: matrix.os == 'macos-latest'
+        run: hdiutil create -volname MONSTERFIGHT -srcfolder dist/*.app -ov -format UDZO MONSTER.FIGHT.dmg
+          
       - name: Upload macOS binaries
         if: matrix.os == 'macos-latest'
         uses: softprops/action-gh-release@v1
         with: 
-          files: dist/*.app
+          files: MONSTER.FIGHT.dmg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
