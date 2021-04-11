@@ -1,5 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+
 block_cipher = None
 
 
@@ -37,3 +39,9 @@ exe = EXE(pyz,
           console=False,
           windowed=True,
           icon='DEPENDANCES/images/icone.ICO')
+
+if sys.platform == 'darwin':
+    app = BUNDLE(exe,
+                 name='MONSTER FIGHT.app',
+                 icon='DEPENDANCES/images/icone.ICO',
+                 bundle_identifier=None)
